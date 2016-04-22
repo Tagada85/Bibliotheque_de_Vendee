@@ -1,0 +1,36 @@
+
+/*================
+      Variables
+====================*/
+
+$red: #BB0F00;
+$dark-red : #6E0000;
+$maroon: #6D2908;
+$light-blue: #1BA3E1;
+$turquoise : #02D0AC;
+
+$font-stack: 'Nunito', 'Helvetica Neue', sans-serif;
+
+/*===============
+    General
+================*/
+
+body{
+  background-color: $light-blue;
+  font-family: $font-stack;
+  font-color: $maroon;
+}
+
+a{
+    text-decoration: none;
+    color: $dark-red;
+}
+
+.wrapper {
+    max-width: 90%;
+    margin: 0 auto;
+}
+
+section{
+    margin: 20px;
+}

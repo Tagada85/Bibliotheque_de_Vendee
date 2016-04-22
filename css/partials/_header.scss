@@ -1,0 +1,39 @@
+header{
+    max-height: 80px;
+    &:after{
+        content:"";
+        display: table;
+        clear: both;
+    }
+}
+
+.logo{
+    max-width: 40%;
+    float:left;
+}
+
+.navigation{
+    max-width: 60%;
+    float: left;
+    margin-top: 20px;
+    li {
+        display: inline-block;
+        padding: 0 ;
+        border-radius: 10px;
+        margin-right: 20px;
+    }
+    a {
+        display: block;
+        padding: 25px 30px;
+        font-size: 18px;
+        font-weight: 700;
+        background-color: $turquoise;
+        border-radius: 10px;
+        &:hover{
+            background-color: darken($turquoise, 10%);
+        }
+        &.current{
+            background-color: darken($turquoise, 5%);
+        }
+    }
+}

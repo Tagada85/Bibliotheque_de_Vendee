@@ -1,0 +1,110 @@
+/*================
+    Reset
+==================*/
+html, body, div, span, applet, object, iframe,
+h1, h2, h3, h4, h5, h6, p, blockquote, pre,
+a, abbr, acronym, address, big, cite, code,
+del, dfn, em, img, ins, kbd, q, s, samp,
+small, strike, strong, sub, sup, tt, var,
+b, u, i, center,
+dl, dt, dd, ol, ul, li,
+fieldset, form, label, legend,
+table, caption, tbody, tfoot, thead, tr, th, td,
+article, aside, canvas, details, embed,
+figure, figcaption, footer, header, hgroup,
+menu, nav, output, ruby, section, summary,
+time, mark, audio, video {
+  margin: 0;
+  padding: 0;
+  border: 0;
+  font-size: 100%;
+  font: inherit;
+  vertical-align: baseline; }
+
+/* HTML5 display-role reset for older browsers */
+article, aside, details, figcaption, figure,
+footer, header, hgroup, menu, nav, section {
+  display: block; }
+
+body {
+  line-height: 1; }
+
+ol, ul {
+  list-style: none; }
+
+blockquote, q {
+  quotes: none; }
+
+blockquote:before, blockquote:after,
+q:before, q:after {
+  content: '';
+  content: none; }
+
+table {
+  border-collapse: collapse;
+  border-spacing: 0; }
+
+/*================
+      Variables
+====================*/
+/*===============
+    General
+================*/
+body {
+  background-color: #1BA3E1;
+  font-family: "Nunito", "Helvetica Neue", sans-serif;
+  font-color: #6D2908; }
+
+a {
+  text-decoration: none;
+  color: #6E0000; }
+
+.wrapper {
+  max-width: 90%;
+  margin: 0 auto; }
+
+section {
+  margin: 20px; }
+
+header {
+  max-height: 80px; }
+  header:after {
+    content: "";
+    display: table;
+    clear: both; }
+
+.logo {
+  max-width: 40%;
+  float: left; }
+
+.navigation {
+  max-width: 60%;
+  float: left;
+  margin-top: 20px; }
+  .navigation li {
+    display: inline-block;
+    padding: 0;
+    border-radius: 10px;
+    margin-right: 20px; }
+  .navigation a {
+    display: block;
+    padding: 25px 30px;
+    font-size: 18px;
+    font-weight: 700;
+    background-color: #02D0AC;
+    border-radius: 10px; }
+    .navigation a:hover {
+      background-color: #029d82; }
+    .navigation a.current {
+      background-color: #02b797; }
+
+.homepage h2 {
+  font-size: 25px;
+  font-weight: 700; }
+
+.section_link {
+  text-decoration: underline;
+  font-weight: bolder;
+  font-size: 120%; }
+
+/*# sourceMappingURL=styles.css.map */
