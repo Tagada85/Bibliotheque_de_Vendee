@@ -2,19 +2,25 @@
     include('inc/header.php');
  ?>
             <section class="homepage">
-                <h2>Bienvenue sur le site de la bibliothèque de Vendée.</h2>
-                <p>
-                    Nous disposons d'un grand nombre de livres en français et en anglais. Vous pouvez
-                    les lire dans notre bibliothèque ou bien les emprunter.
-                    Vous pouvez consulter <a href="/offres.php" class="section_link">nos offres </a>si vous souhaiter devenir membre ou
-                    simplement <a href="/livres.php" class="section_link">réserver</a> un livre de notre bibliothèque depuis ce site.
-                </p>
+                <div class="homepage_text left">
+                    <h2>Bienvenue à la bibliothèque de Vendée.</h2>
+                    <p>
+                        Depuis 30 ans, notre établissement s'efforce de fournir un grand nombre d'ouvrages
+                        pour élargir vos horizons. N'hésitez pas à nous contacter pour toute question ou suggestion!
+                        Commencez dès à présent en consultant nos offres ou réservez un ouvrage via notre site.
+                    </p>
+                    <a href="/offres.php" class="cta">Nos offres <i class="fa fa-arrow-circle-right" aria-hidden="true"></i></a>
+                    <a href="/livres.php" class="cta">Réservez <i class="fa fa-arrow-circle-right" aria-hidden="true"></i></a>
+                </div>
+                <div class="photo_container right">
+                    <img src="img/photo_home.jpg" alt='Photo de livres' />
+                </div>
+
 
             </section>
-            <footer>
-
-            </footer>
-
-        </div>
+        <?php
+            include('inc/footer.php');
+         ?>
+         </div>
     </body>
 </html>

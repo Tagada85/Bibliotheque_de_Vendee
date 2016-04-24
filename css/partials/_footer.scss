@@ -1,0 +1,14 @@
+footer {
+    border-top: 3px solid $maroon;
+    padding-top: 10px;
+    h3{
+        text-align: center;
+    }
+}
+.contact {
+    margin-top: 10px;
+    li {
+        display: inline-block;
+        width: 23%;
+    }
+}
