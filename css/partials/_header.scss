@@ -37,6 +37,7 @@ header{
         }
         &.current{
             background-color: darken($turquoise, 5%);
+            border: inset 6px $red;
         }
     }
 }

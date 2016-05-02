@@ -33,6 +33,40 @@ a{
 
 section{
     margin: 20px;
+    h3{
+        font-size: 150%;
+        margin: 15px;
+    }
+}
+
+form{
+    text-align: center;
+}
+
+input{
+    display: block;
+    width: 250px;
+    padding: 12px;
+    font-family: $font-stack;
+    font-size: 20px;
+    margin: 10px auto;
+    &:focus{
+        border: inset 4px  $maroon;
+    }
+}
+
+input[type="submit"]{
+    font-size: 20px;
+    width: 200px;
+    padding: 15px;
+    background-color: $turquoise;
+}
+
+label {
+    display: inline;
+    margin-bottom: 10px;
+    font-size: 120%;
+    font-weight: bolder;
 }
 
 .left {

@@ -1,0 +1,65 @@
+.bibliotheque {
+    padding: 0 5%;
+}
+
+.livre_container {
+    width: 49.9%;
+    float: left;
+    position: relative;
+    border-bottom: 1px solid darkgrey;
+    padding: 20px 0;
+    &:after{
+        content: "";
+        display: table;
+        clear: both;
+    }
+    &:nth-child(even){
+        border-right: 1px solid darkgrey;
+    }
+    .imgLivre{
+        float: left;
+        margin-left: 5px;
+    }
+    .livre_desc{
+        display: inline;
+        margin-left: 25px;
+    }
+    .titre {
+        font-size: 120%;
+        font-weight: bold;
+    }
+
+    .auteur{
+        font-size: 80%;
+        margin-left: 5%;
+    }
+    .reserver_btn {
+       color: $maroon;
+       padding: 20px;
+       position: absolute;
+       bottom: 2%;
+       left: 30%;
+       background-color: $turquoise;
+       border-radius: 10px;
+       &:hover{
+           background-color: darken($turquoise, 10%);
+       }
+   }
+
+}
+
+.filtres {
+    border: 1px solid black;
+    input{
+        display: inline-block;
+        width: auto;
+    }
+    .radio_form{
+        max-width: 25%;
+        label{
+            display: block;
+            text-align: left;
+        }
+
+    }
+}
