@@ -1,5 +1,5 @@
 .homepage{
-    margin-top: 50px;
+    margin-top: 20px;
     .homepage_text {
         max-width: 50%;
         line-height: 1.5;
@@ -35,11 +35,11 @@
     display: inline-block;
     margin: 10px 25px;
     font-size: 20px;
-    color: $turquoise;
-    background-color: $maroon;
+    color: $yellow;
+    background-color: $red;
     padding: 15px;
     border-radius:10px;
     &:hover {
-        background-color: darken($maroon, 5%);
+        background-color: darken($red, 5%);
     }
 }

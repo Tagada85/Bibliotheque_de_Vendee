@@ -1,43 +1,53 @@
 header{
-    background-image: url('../img/banner-background.jpg');
-    min-height: 150px;
+	background-image: url('../img/banner-background.jpg');
+	min-height: 150px;
 
-    &:after{
-        content:"";
-        display: table;
-        clear: both;
-    }
-}
+	&:after{
+		content:"";
+		display: table;
+		clear: both;
+	}
+}                        
 
 .logo{
-    width: 30%;
-    float:left;
-    margin-left: 10%;
+	width: 30%;
+	float:left;
+	margin-left: 10%;
 }
 
 .navigation{
-    width: 60%;
-    float: left;
+	width: 60%;
+	float: left;
 
-    li {
-        padding: 0 ;
-        border-radius: 10px;
-        margin: 40px 25px 0 0;
-        display: inline-block;
-    }
-    a {
-        display: block;
-        padding: 25px 30px;
-        font-size: 18px;
-        font-weight: 700;
-        background-color: $turquoise;
-        border-radius: 10px;
-        &:hover{
-            background-color: darken($turquoise, 10%);
-        }
-        &.current{
-            background-color: darken($turquoise, 5%);
-            border: inset 6px $red;
-        }
-    }
+	li {
+		padding: 0 ;
+		border-radius: 10px;
+		margin: 40px 25px 0 0;
+		display: inline-block;
+	}
+	a {
+		display: block;
+		padding: 25px 30px;
+		font-size: 18px;
+		font-weight: 700;
+		background-color: $yellow;
+		border-radius: 10px;
+		&:hover{
+			background-color: darken($yellow, 10%);
+		}
+		&.current{
+			background-color: darken($yellow, 5%);
+			border: inset 6px $red;
+		}
+	}
 }
+
+#logout {
+	background-color: $red;
+	cursor: pointer;
+	width: auto;
+	font-size: 14px;
+}
+
+
+

@@ -1,11 +1,23 @@
 <?php
+    session_start();
+    $_SERVER['DOCUMENT_ROOT'] = "/home/damienco/public_html/Librairie_de_Vendee";
     $path = $_SERVER["REQUEST_URI"];
+    require('inc/utilisateurs.class.php');
+    if(isset($_POST['logout']) && $_POST['logout'] == 1){
+        unset($_SESSION['Prenom']);
+        unset($_SESSION['Nom']);
+        unset($_SESSION['Type']);
+        unset($_SESSION['id']);
+        session_destroy();
+        header('Location:index.php');
+    }
  ?>
 
 <!DOCTYPE html>
 <html>
     <head>
-        <meta charset='utf-8' />
+        <meta charset="UTF-8">
+        <meta http-equiv="Content-type" content="text/html; charset=UTF-8">
         <title><?php
             if($path == '/'){
                 echo 'Accueil';
@@ -65,3 +77,24 @@
 
             </header>
             <div class="wrapper">
+                <?php
+                if(isset($_SESSION['Prenom']) && isset($_SESSION['Nom']) && isset($_SESSION['Type'])){
+                    $session = new Utilisateur;
+                    $id = $session->recupererIdUtilisateur($_SESSION['Nom'], $_SESSION['Prenom']);
+                    $_SESSION['id'] = $id;
+                    echo '<form action="#" method="POST" class="right">
+                            <input type="hidden" name="logout" value="1" />
+                            <input type="submit" value="Déconnexion" id="logout"/>
+                        </form>';
+                };
+
+                 ?>
+                <script>
+                    var logoutBtn = document.getElementById('logout');
+                    logoutBtn.onclick = function(e){
+                        var reponse = confirm('Vous allez être déconnecté de votre compte. Continuer ?');
+                        if(!reponse){
+                            e.preventDefault();
+                        }
+                    }
+                </script>

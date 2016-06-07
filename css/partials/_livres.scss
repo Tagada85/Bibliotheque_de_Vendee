@@ -34,16 +34,21 @@
         margin-left: 5%;
     }
     .reserver_btn {
-       color: $maroon;
+       color: $red;
        padding: 20px;
        position: absolute;
        bottom: 2%;
        left: 30%;
-       background-color: $turquoise;
+       background-color: $yellow;
        border-radius: 10px;
        &:hover{
-           background-color: darken($turquoise, 10%);
+           background-color: darken($yellow, 10%);
        }
+   }
+   .supprimer_btn{
+      background-color: red;
+      width: 100px;
+      font-size: 14px;
    }
 
 }

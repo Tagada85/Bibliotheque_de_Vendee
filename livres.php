@@ -31,10 +31,14 @@
     }
 
 
-
  ?>
 
  <section class="bibliotheque">
+ <?php 
+ if($_SESSION['Type'] == 'Employe'){
+    echo "<a href='/ajout_livres.php' class='yellow_link'>Ajouter un livre</a>";
+ }
+ ?>
 
      <div class="filtres">
          <form action="/livres.php" method="GET">
@@ -64,11 +68,28 @@
             echo "<div class='livre_container'>";
             echo  "<img src='".$livre['Image']. " ' class='imgLivre'  height='150' width='100'/>";
             echo "<p class='livre_desc'><span class='titre'>". $livre['Titre'] ."</span><br /><span class='auteur'>De: " . $livre["Auteur"] . "</span></p> ";
-            echo "<form method='GET' action='/reservation.php'>";
-            echo "<input type='hidden' name='isbn' value='" . $livre["ISBN"] . " ' />";
-            echo '<input type="submit"  class="reserver_btn" value="Réserver" >';
-            echo "</form>";
+            if(isset($_SESSION['Type']) && $_SESSION['Type'] == 'Membre'){
+                echo "<form method='GET' action='/reservation.php'>";
+                echo "<input type='hidden' name='isbn' value='" . $livre["ISBN"] . " ' />";    
+                $estEmprunte = $catalogue->verifierSiLivreEstDispo($livre['ISBN']);
+                if(!$estEmprunte){
+                echo '<input type="submit"  class="reserver_btn" value="Réserver" >';                                
+                }else{
+                    echo 'Livre non disponible.';
+                }          
+                echo "</form>";
+            }
+            if(isset($_SESSION['Type']) && $_SESSION['Type'] == "Employe"){
+                 echo "<form method='GET' action='/supprimer_livre.php'>";
+                echo "<input type='hidden' name='isbn' value='" . $livre["ISBN"] . " ' />";
+                echo '<input type="submit"  class="supprimer_btn" value="Supprimer" >';
+                echo "</form>";
+            }
             echo '</div>';
         }
      ?>
  </section>
+
+ <?php
+ include('./inc/footer.php');
+  ?>

@@ -9,7 +9,6 @@ small, strike, strong, sub, sup, tt, var,
 b, u, i, center,
 dl, dt, dd, ol, ul, li,
 fieldset, form, label, legend,
-table, caption, tbody, tfoot, thead, tr, th, td,
 article, aside, canvas, details, embed,
 figure, figcaption, footer, header, hgroup,
 menu, nav, output, ruby, section, summary,
@@ -40,10 +39,6 @@ q:before, q:after {
   content: '';
   content: none; }
 
-table {
-  border-collapse: collapse;
-  border-spacing: 0; }
-
 /*================
       Variables
 ====================*/
@@ -53,11 +48,11 @@ table {
 body {
   background-color: #1BA3E1;
   font-family: "Nunito", "Helvetica Neue", sans-serif;
-  font-color: #6D2908; }
+  color: black; }
 
 a {
   text-decoration: none;
-  color: #6E0000; }
+  color: #FF4114; }
 
 .wrapper {
   max-width: 90%;
@@ -80,13 +75,13 @@ input {
   font-size: 20px;
   margin: 10px auto; }
   input:focus {
-    border: inset 4px #6D2908; }
+    border: inset 4px black; }
 
 input[type="submit"] {
   font-size: 20px;
   width: 200px;
   padding: 15px;
-  background-color: #02D0AC; }
+  background-color: #FFBD14; }
 
 label {
   display: inline;
@@ -99,6 +94,9 @@ label {
 
 .right {
   float: right; }
+
+.yellow_link {
+  color: #FFBD14; }
 
 header {
   background-image: url("../img/banner-background.jpg");
@@ -126,16 +124,23 @@ header {
     padding: 25px 30px;
     font-size: 18px;
     font-weight: 700;
-    background-color: #02D0AC;
+    background-color: #FFBD14;
     border-radius: 10px; }
     .navigation a:hover {
-      background-color: #029d82; }
+      background-color: #e0a100; }
     .navigation a.current {
-      background-color: #02b797;
-      border: inset 6px #BB0F00; }
+      background-color: #fab300;
+      border: inset 6px #FF4114; }
+
+#logout {
+  background-color: #FF4114;
+  cursor: pointer;
+  width: auto;
+  font-size: 14px; }
 
 footer {
-  border-top: 3px solid #6D2908;
+  clear: both;
+  border-top: 3px solid #FF4114;
   padding: 20px 0 50px 0; }
   footer h3 {
     text-align: center; }
@@ -147,7 +152,7 @@ footer {
     width: 23%; }
 
 .homepage {
-  margin-top: 50px; }
+  margin-top: 20px; }
   .homepage .homepage_text {
     max-width: 50%;
     line-height: 1.5;
@@ -176,12 +181,12 @@ footer {
   display: inline-block;
   margin: 10px 25px;
   font-size: 20px;
-  color: #02D0AC;
-  background-color: #6D2908;
+  color: #FFBD14;
+  background-color: #FF4114;
   padding: 15px;
   border-radius: 10px; }
   .cta:hover {
-    background-color: #552006; }
+    background-color: #fa3000; }
 
 .appel_creation {
   text-align: center; }
@@ -214,15 +219,19 @@ footer {
     font-size: 80%;
     margin-left: 5%; }
   .livre_container .reserver_btn {
-    color: #6D2908;
+    color: #FF4114;
     padding: 20px;
     position: absolute;
     bottom: 2%;
     left: 30%;
-    background-color: #02D0AC;
+    background-color: #FFBD14;
     border-radius: 10px; }
     .livre_container .reserver_btn:hover {
-      background-color: #029d82; }
+      background-color: #e0a100; }
+  .livre_container .supprimer_btn {
+    background-color: red;
+    width: 100px;
+    font-size: 14px; }
 
 .filtres {
   border: 1px solid black; }
@@ -239,6 +248,17 @@ footer {
   display: inline-block;
   width: 30%;
   margin-right: 2%;
-  border: 2px solid #6D2908; }
+  border: 2px solid #FF4114; }
+
+.liste_emprunts {
+  border-collapse: collapse;
+  border: 1px solid black; }
+  .liste_emprunts td, .liste_emprunts th {
+    padding: 10px;
+    border: 1px solid black; }
+  .liste_emprunts .emprunt_retour {
+    padding: 0;
+    font-size: 16px;
+    width: 120px; }
 
 /*# sourceMappingURL=styles.css.map */

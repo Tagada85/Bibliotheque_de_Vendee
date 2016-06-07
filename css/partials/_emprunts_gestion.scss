@@ -1,0 +1,15 @@
+
+
+.liste_emprunts{
+	border-collapse: collapse;
+	border: 1px solid black; 
+	td, th{
+		padding: 10px;
+		border: 1px solid black;
+	}
+	.emprunt_retour{
+		padding: 0;
+		font-size: 16px;
+		width: 120px;
+	}
+}

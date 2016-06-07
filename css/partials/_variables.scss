@@ -3,11 +3,11 @@
       Variables
 ====================*/
 
-$red: #BB0F00;
-$dark-red : #6E0000;
-$maroon: #6D2908;
+
+$yellow: #FFBD14;
+$red: #FF4114;
 $light-blue: #1BA3E1;
-$turquoise : #02D0AC;
+$color-text: black;
 
 $font-stack: 'Nunito', 'Helvetica Neue', sans-serif;
 
@@ -18,12 +18,12 @@ $font-stack: 'Nunito', 'Helvetica Neue', sans-serif;
 body{
   background-color: $light-blue;
   font-family: $font-stack;
-  font-color: $maroon;
+  color: $color-text;
 }
 
 a{
     text-decoration: none;
-    color: $dark-red;
+    color: $red;
 }
 
 .wrapper {
@@ -51,7 +51,7 @@ input{
     font-size: 20px;
     margin: 10px auto;
     &:focus{
-        border: inset 4px  $maroon;
+        border: inset 4px  $color-text;
     }
 }
 
@@ -59,7 +59,7 @@ input[type="submit"]{
     font-size: 20px;
     width: 200px;
     padding: 15px;
-    background-color: $turquoise;
+    background-color: $yellow;
 }
 
 label {
@@ -75,4 +75,8 @@ label {
 
 .right{
     float: right;
+}
+
+.yellow_link{
+    color: $yellow;
 }
