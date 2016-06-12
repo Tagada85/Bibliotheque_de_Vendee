@@ -4,30 +4,41 @@
     $nomAuteur = $_GET["auteur"];
     $nomEditeur = $_GET["editeur"];
     $nomTitre = $_GET["titre"];
-    if(empty($nomAuteur) && empty($nomEditeur) && empty($nomTitre)){
-        $catalogue = new Bibliotheque;
+    $nomGenre = $_GET['genre'];
+    $catalogue = new Bibliotheque;
+    $genres = $catalogue->recupererGenres();
+    if(empty($nomAuteur) && empty($nomEditeur) && empty($nomTitre)  && empty($nomGenre)){
         $livres = $catalogue->recupererToutLivres();
-    }else if(!empty($nomAuteur) && empty($nomEditeur) && empty($nomTitre)){
-        $catalogue = new Bibliotheque;
+    }else if(!empty($nomAuteur) && empty($nomEditeur) && empty($nomTitre) && empty($nomGenre)){
         $livres = $catalogue->filtrerParAuteur($nomAuteur);
-    }else if(!empty($nomTitre) && empty($nomEditeur) && empty($nomAuteur)){
-        $catalogue = new Bibliotheque;
+    }else if(!empty($nomTitre) && empty($nomEditeur) && empty($nomAuteur) && empty($nomGenre)){
         $livres = $catalogue->filtrerParTitre($nomTitre);
-    }else if(!empty($nomEditeur) && empty($nomTitre) && empty($nomAuteur)){
-        $catalogue = new Bibliotheque;
+    }else if(!empty($nomEditeur) && empty($nomTitre) && empty($nomAuteur) && empty($nomGenre)){
         $livres = $catalogue->filtrerParEditeur($nomEditeur);
-    } else if(!empty($nomTitre) && !empty($nomAuteur) && empty($nomEditeur)){
-        $catalogue = new Bibliotheque;
+    } else if(empty($nomEditeur) && empty($nomTitre) && empty($nomAuteur) && !empty($nomGenre)){
+        $livres = $catalogue->filtrerParGenre($nomGenre);
+    }else if(!empty($nomTitre) && !empty($nomAuteur) && empty($nomEditeur) && empty($nomGenre)){
         $livres = $catalogue->filtrerParAuteurEtTitre($nomAuteur, $nomTitre);
-    }else if (!empty($nomAuteur) && !empty($nomEditeur) && empty($nomTitre)){
-        $catalogue = new Bibliotheque;
+    }else if (!empty($nomAuteur) && !empty($nomEditeur) && empty($nomTitre) && empty($nomGenre)){
         $livres = $catalogue->filtrerParAuteurEtEditeur($nomAuteur, $nomEditeur);
-    }else if (!empty($nomTitre) && !empty($nomEditeur) && empty($nomAuteur)){
-        $catalogue = new Bibliotheque;
+    }else if (!empty($nomTitre) && !empty($nomEditeur) && empty($nomAuteur) && empty($nomGenre)){
         $livres = $catalogue->filtrerParTitreEtEditeur($nomTitre, $nomEditeur);
-    }else if (!empty($nomTitre) && !empty($nomEditeur) && !empty($nomAuteur)){
-        $catalogue = new Bibliotheque;
+    }else if (!empty($nomTitre) && !empty($nomEditeur) && !empty($nomAuteur) && empty($nomGenre)){
         $livres = $catalogue->filtrerParTitreEtEditeurEtAuteur($nomTitre, $nomEditeur, $nomAuteur);
+    }else if(!empty($nomAuteur) && empty($nomEditeur) && empty($nomTitre) && !empty($nomGenre)){
+        $livres = $catalogue->filtrerParAuteurEtGenre($nomAuteur, $nomGenre);
+    }else if(empty($nomAuteur) && !empty($nomEditeur) && empty($nomTitre) && !empty($nomGenre)){
+        $livres = $catalogue->filtrerParEditeurEtGenre($nomEditeur, $nomGenre);
+    }else if(empty($nomAuteur) && empty($nomEditeur) && !empty($nomTitre) && !empty($nomGenre)){
+        $livres = $catalogue->filtrerParTitreEtGenre($nomTitre, $nomGenre);
+    }else if(!empty($nomAuteur) && !empty($nomEditeur) && empty($nomTitre) && !empty($nomGenre)){
+        $livres = $catalogue->filtrerParAuteurEtEditeurEtGenre($nomAuteur, $nomEditeur,$nomGenre);
+    }else if(!empty($nomAuteur) && empty($nomEditeur) && !empty($nomTitre) && !empty($nomGenre)){
+        $livres = $catalogue->filtrerParAuteurEtTitreEtGenre($nomAuteur, $nomTitre, $nomGenre);
+    }else if(empty($nomAuteur) && !empty($nomEditeur) && !empty($nomTitre) && !empty($nomGenre)){
+        $livres = $catalogue->filtrerParEditeurEtTitreEtGenre($nomEditeur, $nomTitre, $nomGenre);
+    }else if(!empty($nomAuteur) && !empty($nomEditeur) && !empty($nomTitre) && !empty($nomGenre)){
+        $livres = $catalogue->filtrerParAuteurEtEditeurEtTitreEtGenre($nomAuteur, $nomEditeur, $nomTitre, $nomGenre);
     }
 
 
@@ -49,6 +60,15 @@
              <input type="text" id="titre" name="titre"/>
              <label for="editeur">Par éditeur :</label>
              <input type="text" id="editeur" name="editeur" />
+             <label for="genre">Genre: </label>
+             <select name="genre" id="genre">
+                 <option value="#" disabled selected> --Choisissez un genre --</option>
+                 <?php 
+                    foreach($genres as $genre){
+                        echo "<option value='" . $genre['ID'] ."'>" . $genre['Libelle'] . "</option>";
+                    }
+                 ?>
+             </select>
              <input type="submit" value="Filtrer" />
 
          </form>

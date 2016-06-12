@@ -8,19 +8,22 @@ Class Utilisateur {
         if(is_object($db)){
             $this->_db = $db;
         }else {
-            $this->_db = new PDO("mysql:host=localhost;dbname=Bibliotheque", "root", "root");
+            $this->_db = new PDO("mysql:host=localhost;dbname=Bibliotheque;charset=utf8", "root", "root");
             $this->_db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
         }
     }
 
     function recupererIdUtilisateur($nom, $prenom){
-        $sql = "SELECT ID FROM Utilisateur WHERE Nom = '$nom' AND Prenom = '$prenom'";
-        if($stmt = $this->_db->query($sql)){
-            $id = $stmt->fetch();
+        $sql = $this->_db->prepare("SELECT ID FROM Utilisateur WHERE Nom = :nom AND Prenom = :prenom");
+        $sql->bindParam(':nom', $nom);
+        $sql->bindParam(':prenom', $prenom);
+        if(!$sql->execute()){
+            return "Une erreur est survenue.";
+        }else{
+            $id = $sql->fetch();
             return $id['ID'];
+            }
         }
-    }
-
     
     function verifierSiCompteEstDejaMembre($prenom, $nom, $dateNaissance){
         $sql = "SELECT COUNT(ID) AS leMembre FROM Utilisateur
@@ -61,8 +64,78 @@ Class Utilisateur {
         return $safe_mdp;
     }
 
+    function genererNouveauMdp(){
+        $chars = "abcdefghijklmnopqrstuvwxyz0123456789";
+        $mdp = "";
+        for($i = 0; $i <= 8; $i++){
+            $random = $chars[rand(0, strlen($chars)-1)];
+            $mdp .= $random;
+        }
+        return $mdp;
+    }
 
+    function verifierMailUtilisateur($mail){
+        $sql = $this->_db->prepare("SELECT COUNT(*) FROM Utilisateur WHERE Email = :mail");
+        $sql->bindParam(':mail', $mail);
+        if(!$sql->execute()){
+            return FALSE;
+        }else{
+            $row = $sql->fetch();
+            if($row[0] == '1'){
+                return TRUE;
+            }else{
+                return FALSE;
+            }
+        }
+    }
+
+    function verifierMailEmploye($mail){
+        $sql = $this->_db->prepare("SELECT count(*) FROM Employe WHERE Email = :mail");
+        $sql->bindParam(':mail', $mail);
+        if(!$sql->execute()){
+            return FALSE;
+        }else{
+            $row = $sql->fetch();
+            if($row[0] == '1'){
+                return TRUE;
+            }else{
+                return FALSE;
+            }
+        }
+    }
+
+    function updateMdpUtilisateur($mail, $nouveauSafeMdp){
+        $sql = $this->_db->prepare("UPDATE Utilisateur SET MotDePasse = '$nouveauSafeMdp' WHERE Email = :mail");
+        $sql->bindParam(':mail', $mail);
+        if(!$sql->execute()){
+            return FALSE;
+        }else{
+            return TRUE;
+        }
+    }
     
+    function updateMdpEmploye($mail, $nouveauSafeMdp){
+        $sql = $this->_db->prepare("UPDATE Employe SET MotDePasse = '$nouveauSafeMdp' WHERE Email = :mail");
+        $sql->bindParam(':mail', $mail);
+        if(!$sql->execute()){
+            return FALSE;
+        }else{
+            return TRUE;
+        }
+    }
+
+    function envoiMailNouveauMdp($mail, $nouveauMdp){
+        $destinataire = $mail;
+        $sujet = "Nouveau mot de passe Biblio Vendée.";
+        $message = "Mot De Passe: " . $nouveauMdp;
+        $envoi = mail($destinataire, $sujet, $message);
+        if(!$envoi){
+            return "Une erreur est survenue. Nous n'avons pas pu vous faire parvenir votre nouveau mot de passe.";
+        }else{
+            return "Un email vous a été envoyé à cette adresse avec votre nouveau mot de passe.";
+        }
+    }
+
     function creationNouveauCompteVisiteur($prenom, $nom, $dateNaissance,  $mdp){
         $sql = $this->_db->prepare("INSERT INTO Utilisateur (Nom , Prenom , DateNaissance, MotDePasse, TypeInscription)
         VALUES (:nom, :prenom, '$dateNaissance', :mdp, '4')");
@@ -326,6 +399,16 @@ Class Utilisateur {
          }
     }
 
+    function recupererEmpruntsPasses($id){
+        $sql = $this->_db->prepare("SELECT * FROM Emprunts JOIN Livre WHERE ID_Utilisateur = '$id' AND Emprunts.ISBN = Livre.ISBN AND DateRendu IS NOT NULL");
+        if(!$sql->execute()){
+            return 'Désolé, une erreur est survenue.';
+        }else{
+            $empruntsPasses = $sql->fetchAll(PDO::FETCH_ASSOC);
+            return $empruntsPasses;
+        }
+    }
+
     function recupererInfosEmprunts($id){
         $sql = "SELECT * FROM Emprunts JOIN Livre WHERE ID_Utilisateur = '$id' AND Emprunts.ISBN = Livre.ISBN 
         AND Emprunts.DateRendu IS NULL";
@@ -399,16 +482,52 @@ Class Utilisateur {
     }
 
     function recupererMontantPenalites($id){
-        $sql = $this->_db->prepare("SELECT * FROM Emprunts LEFT JOIN Penalites WHERE Emprunts.ID_Utilisateur = '$id' AND ID_Penalites IS NOT NULL");
+        $sql = $this->_db->prepare("SELECT * FROM Emprunts  WHERE Emprunts.ID_Utilisateur = '$id' AND ID_Penalites IS NOT NULL");
         if(!$sql->execute()){
             return "Nous n'avons pas pu calculer le montant de vos pénalités.";
         }else{
             $penalites = $sql->fetchAll();
-            return $penalites;
+            $montant = 0;
+            foreach($penalites as $p){
+                if($p['ID_Penalites'] == 1){
+                    $montant += 5;
+                }else if($p['ID_Penalites'] == 2){
+                    $montant += 10;
+                }else if($p['ID_Penalites'] == 3){
+                    $montant += 15;
+                }
+            }
+            $sql = $this->_db->prepare("UPDATE Utilisateur SET MontantPenalites = '$montant' WHERE ID = '$id'");
+            if(!$sql->execute()){
+                return 'Une erreur est survenue.';
+            }
+            return $montant;
         }
     }
 
-    function montantTotalAPayer($id){
-        
+    function recupererUtilisateurQuiNontPasPaye(){
+        $sql = $this->_db->prepare('SELECT * FROM Utilisateur WHERE ReglementMensuel = 0 AND TypeInscription != 4');
+        if(!$sql->execute()){
+            return 'Désolé, une erreur est survenue';
+        }else{
+            $users = $sql->fetchAll(PDO::FETCH_ASSOC);
+            return $users;
+        }
+    }
+
+    function ajouterReglementMensuel($prenom, $nom){
+        $id = self::recupererIdUtilisateur($nom, $prenom);
+        $sql = $this->_db->prepare("UPDATE Utilisateur SET MontantPenalites = 0, ReglementMensuel = 1 WHERE ID = '$id'");
+        if(!$sql->execute()){
+            return 'Une erreur est survenue.';
+        }else{
+            $sql = $this->_db->prepare("UPDATE Emprunts SET ID_Penalites = NULL WHERE ID_Utilisateur = '$id'");
+            if(!$sql->execute()){
+                return 'Une erreur est survenue.';
+            }else{
+                return 'Le réglement a bien été enregistré.';
+            }
+        }
+
     }
 }

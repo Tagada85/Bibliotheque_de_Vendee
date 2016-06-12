@@ -16,11 +16,36 @@ if(!empty($_POST["isbn"])){
 	}
 	header("Refresh:0");
 }
+if(!empty($_POST['livre_emprunte']) && !empty($_POST['prenom']) && !empty($_POST['nom']) && !empty($_POST['debut_emprunt'])){
+
+	if(strlen($_POST["livre_emprunte"]) != 13){
+		echo "L'isbn doit être composé de 13 chiffres.";
+		return;
+	}
+	$user = new Utilisateur;
+	$id = $user->recupererIdUtilisateur($_POST['nom'], $_POST['prenom']);
+	$nouvelEmprunt = $biblio->ajouterEmprunt($_POST['livre_emprunte'], $id, $_POST['debut_emprunt']);
+	echo $nouvelEmprunt;
+}
 
 ?>
 
 <section>
 	<h3>Liste des emprunts en cours: </h3>
+	<a href="#" id="toggle">Ajouter un livre à la liste d'emprunts</a>
+	<div id="ajout_emprunt_form">
+		<form action="#" method="POST">
+			<label for="isbn">ISBN: </label>
+			<input type="text" name="livre_emprunte" id="isbn">
+			<label for="prenom">Prénom Emprunteur: </label>
+			<input type="text" name="prenom" id="prenom">
+			<label for="nom">Nom Emprunteur: </label>
+			<input type="text" name="nom" id="nom">
+			<label for="debut_emprunt">Début Emprunt: </label>
+			<input type="date" name="debut_emprunt" id="debut_emprunt">
+			<input type="submit" value="Ajouter Emprunt">
+		</form>
+	</div>
 	<table class="liste_emprunts">
 	<tr>
 		<th>Titre</th>
@@ -58,6 +83,16 @@ if(!empty($_POST["isbn"])){
 			if(!livreRetour){
 				e.preventDefault();
 			}
+		}
+	}
+	var empruntForm = document.getElementById("ajout_emprunt_form");
+	var toggleForm = document.getElementById('toggle');
+	empruntForm.style.display = 'none';
+	toggleForm.onclick = function(){
+		if(empruntForm.style.display == 'none'){
+			empruntForm.style.display = 'block';
+		}else{
+			empruntForm.style.display = "none";
 		}
 	}
 </script>

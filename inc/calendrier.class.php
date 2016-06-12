@@ -51,4 +51,14 @@ Class Calendrier{
 		}
 
 	}
+
+	function supprimerEvenement($id){
+		$sql = $this->_db->prepare("DELETE FROM Calendrier WHERE ID = :id");
+		$sql->bindParam(':id', $id);
+		if(!$sql->execute()){
+			return 'Une erreur est survenue.';
+		}else{
+			return "L'évènement a bien été effacé.";
+		}
+	}
 }

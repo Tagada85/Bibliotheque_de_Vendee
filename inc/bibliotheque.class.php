@@ -10,7 +10,7 @@ Class Bibliotheque{
         if(is_object($db)){
             $this->_db = $db;
         }else {
-            $this->_db = new PDO("mysql:host=localhost;dbname=Bibliotheque", "root", "root");
+            $this->_db = new PDO("mysql:host=localhost;dbname=Bibliotheque;charset=utf8", "root", "root");
             $this->_db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
         }
     }
@@ -112,6 +112,118 @@ Class Bibliotheque{
             return 'Désolé, une erreur est survenue';
         }
         return $livres;
+    }
+
+    function filtrerParGenre($nomGenre){
+        $sql = $this->_db->prepare("SELECT * FROM Livre WHERE ID_Genre = :IDGenre");
+        $sql->bindParam(':IDGenre', $nomGenre);
+        if(!$sql->execute()){
+            return 'Désolé, une erreur est survenue.';
+        }else{
+            $livres = $sql->fetchAll(PDO::FETCH_ASSOC);
+            return $livres;
+        }
+    }
+
+    function filtrerParAuteurEtGenre($nomAuteur, $nomGenre){
+        $filtreA = "%$nomAuteur%";
+        $sql = $this->_db->prepare("SELECT * FROM Livre WHERE Auteur LIKE :filtreA AND ID_Genre = :IDGenre");
+        $sql->bindParam(':filtreA', $filtreA);
+        $sql->bindParam(':IDGenre', $nomGenre);
+        if(!$sql->execute()){
+            return 'Désolé, une erreur est survenue.';
+        }else{
+            $livres = $sql->fetchAll(PDO::FETCH_ASSOC);
+            return $livres;
+        }
+    }
+
+    function filtrerParEditeurEtGenre($nomEditeur, $nomGenre){
+        $filtreE = "%$nomEditeur%";
+        $sql = $this->_db->prepare("SELECT * FROM Livre WHERE Editeur LIKE :filtreE AND ID_Genre = :IDGenre");
+        $sql->bindParam(":filtreE", $filtreE);
+        $sql->bindParam(':IDGenre', $nomGenre);
+        if(!$sql->execute()){
+            return 'Désolé, une erreur est survenue.';
+        }else{
+            $livres = $sql->fetchAll(PDO::FETCH_ASSOC);
+            return $livres;
+        }
+    }
+
+    function filtrerParTitreEtGenre($nomTitre, $nomGenre){
+        $filtreT = "%$nomTitre%";
+        $sql = $this->_db->prepare("SELECT * FROM Livre WHERE Titre LIKE :filtreT AND ID_Genre = :IDGenre");
+        $sql->bindParam(":filtreT", $filtreT);
+        $sql->bindParam(":IDGenre", $nomGenre);
+        if(!$sql->execute()){
+            return 'Désolé, une erreur est survenue.';
+        }else{
+            $livres = $sql->fetchAll(PDO::FETCH_ASSOC);
+            return $livres;
+        }
+    }
+
+    function filtrerParAuteurEtEditeurEtGenre($nomAuteur, $nomEditeur,$nomGenre){
+        $filtreA = "%$nomAuteur%";
+        $filtreE = "%$nomEditeur%";
+        $sql = $this->_db->prepare("SELECT * FROM Livre WHERE Auteur LIKE :filtreA AND Editeur LIKE :filtreE AND ID_Genre = :IDGenre");
+        $sql->bindParam(":filtreA", $filtreA);
+        $sql->bindParam(":filtreE", $filtreE);
+        $sql->bindParam(":IDGenre", $nomGenre);
+        if(!$sql->execute()){
+            return "Désolé, une erreur est survenue.";
+        }else {
+            $livres = $sql->fetchAll(PDO::FETCH_ASSOC);
+            return $livres;
+        }
+    }
+
+    function filtrerParAuteurEtTitreEtGenre($nomAuteur, $nomTitre, $nomGenre){
+        $filtreA = "%$nomAuteur%";
+        $filtreT = "%$nomTitre%";
+        $sql = $this->_db->prepare("SELECT * FROM Livre WHERE Auteur LIKE :filtreA AND Titre LIKE :filtreT AND ID_Genre = :IDGenre");
+        $sql->bindParam(":filtreA", $filtreA);
+        $sql->bindParam(':filtreT', $filtreT);
+        $sql->bindParam(':IDGenre', $nomGenre);
+        if(!$sql->execute()){
+            return "Désolé, une erreur est survenue.";
+        }else{
+            $livres = $sql->fetchAll(PDO::FETCH_ASSOC);
+            return $livres;
+        }
+    }
+
+    function filtrerParEditeurEtTitreEtGenre($nomEditeur, $nomTitre, $nomGenre){
+        $filtreE = "%$nomEditeur%";
+        $filtreT = "%$nomTitre%";
+        $sql = $this->_db->prepare("SELECT * FROM Livre WHERE Editeur LIKE :filtreE AND Titre LIKE :filtreT AND ID_Genre = :IDGenre");
+        $sql->bindParam(":filtreE", $filtreE);
+        $sql->bindParam(':filtreT', $filtreT);
+        $sql->bindParam(":IDGenre", $nomGenre);
+        if(!$sql->execute()){
+            return "Désolé, une erreur est survenue.";
+        }else{
+            $livres = $sql->fetchAll(PDO::FETCH_ASSOC);
+            return $livres;
+        }
+    }
+
+    function filtrerParAuteurEtEditeurEtTitreEtGenre($nomAuteur, $nomEditeur, $nomTitre, $nomGenre){
+        $filtreA = "%$nomAuteur%";
+        $filtreE = "%$nomEditeur%";
+        $filtreT = "%$nomTitre%";
+        $sql = $this->_db->prepare("SELECT * FROM Livre WHERE Auteur LIKE :filtreA AND Editeur LIKE :filtreE AND Titre LIKE :filtreT AND ID_Genre = :IDGenre");
+        $sql->bindParam(":filtreA", $filtreA);
+        $sql->bindParam(":filtreE", $filtreE);
+        $sql->bindParam(":filtreT", $filtreT);
+        $sql->bindParam(":IDGenre", $nomGenre);
+        if(!$sql->execute()){
+            return "Désolé, une erreur est survenue.";
+        }else{
+            $livres = $sql->fetchAll(PDO::FETCH_ASSOC);
+            return $livres;
+        }
     }
 
 
@@ -234,6 +346,17 @@ Class Bibliotheque{
             return "Une erreur est survenue. Veuilez réessayez plus tard.";
         }else {
             return "La date de retour a bien été enregistrée.";
+        }
+    }
+
+    function ajouterEmprunt($isbn, $id, $date){
+        $sql = $this->_db->prepare("INSERT INTO Emprunts (ID_Utilisateur, ISBN, Debut_Emprunt, Fin_Emprunt)
+         VALUES('$id', :isbn, '$date', DATE_ADD('$date', INTERVAL 2 WEEK))");
+        $sql->bindParam(":isbn", $isbn);
+        if(!$sql->execute()){
+            return "Une erreur est survenue. Veuillez vérifier l'isbn ou le nom de l'emprunteur.";
+        }else{
+            return "L'emprunt a été enregistré.";
         }
     }
 }

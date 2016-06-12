@@ -16,8 +16,7 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <meta charset="UTF-8">
-        <meta http-equiv="Content-type" content="text/html; charset=UTF-8">
+        <meta http-equiv="Content-type" content="text/html" charset="ISO-8859-1">
         <title><?php
             if($path == '/'){
                 echo 'Accueil';

@@ -4,7 +4,6 @@
     $rechercheLivre = new Bibliotheque;
     $livreRechercher = $rechercheLivre->recupererInfosLivre($_GET['isbn']);
     if(!empty($_POST['dateRetrait'])){
-        var_dump($_POST['dateRetrait']);
         $demandeEmprunt = new Utilisateur;
         $ajouterLivreEmprunts = $demandeEmprunt->ajouterLivreListeEmprunts($_GET['isbn'], $_SESSION['id'], $_POST['dateRetrait']);
         if($ajouterLivreEmprunts){
